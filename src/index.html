@@ -63,9 +63,43 @@
   </head>
   <body class="bg-white dark:bg-gray-900">
     <!-- Parent Container with Flexbox -->
-    <section class="flex flex-col h-screen">
+    <section class="flex flex-col h-screen w-full">
       <div
-        x-data="{ sidebarOpen: false, profileAccountOpen: false, generalOpen: false, profileOpen: true, modalOpen: false, chatOpen: false, deleteOpen: false, deleteChatOpen: false }"
+        x-data="{
+  // Modal states
+  sidebarOpen: false,
+  profileAccountOpen: false,
+  generalOpen: false,
+  profileOpen: true,
+  modalOpen: false,
+  chatOpen: false,
+  deleteOpen: false,
+  deleteChatOpen: false,
+  CustomizeModelOpen: false,
+  FileUploadOpen: false,
+  LogoOpen: false,
+
+  // API settings
+  apiKey: '4sNhFQ******ffyt',
+  baseURL: 'https://api.openai.com',
+  selectedModel: 'gpt-3.5-turbo',
+  maxTokens: 2048,
+  temperature: 0.7,
+  topP: 1,
+
+  // Methods
+  saveChanges() {
+    // Simpan perubahan atau kirim ke API
+    console.log({
+      apiKey: this.apiKey,
+      baseURL: this.baseURL,
+      selectedModel: this.selectedModel,
+      maxTokens: this.maxTokens,
+      temperature: this.temperature,
+      topP: this.topP
+    });
+  }
+}"
         class="flex h-screen"
       >
         <!-- Overlay (closes sidebar when clicked outside) -->
@@ -78,7 +112,7 @@
         <!-- Sidebar Container -->
         <div
           :class="{'block': sidebarOpen, 'hidden': !sidebarOpen}"
-          class="md:block md:w-64 w-64 overflow-y-auto border-r px-4 py-8 bg-white dark:bg-gray-800 transition-all duration-300 ease-in-out fixed top-0 left-0 h-full shadow-md z-30"
+          class="md:block md:w-64 w-64 overflow-y-auto border-r px-4 py-8 bg-white dark:bg-gray-800 transition-all duration-300 ease-in-out fixed xxl:relative top-0 left-0 h-full shadow-md z-30"
         >
           <div class="flex flex-col justify-between h-full">
             <!-- Logo -->
@@ -151,7 +185,7 @@
               <div class="relative">
                 <button
                   @click="profileAccountOpen = !profileAccountOpen"
-                  class="flex items-center text-gray-800 dark:text-white w-full text-left hover:text-indigo-500 dark:hover:text-indigo-400"
+                  class="flex items-center text-gray-800 dark:text-white w-full text-left hover:text-gray-700 dark:hover:text-gray-400"
                 >
                   <img
                     src="https://placehold.co/100x100?text=Profile"
@@ -176,9 +210,11 @@
                   </a>
                   <hr class="my-2 border-gray-200 dark:border-gray-600" />
                   <a
+                    @click="CustomizeModelOpen = true"
                     href="#"
                     class="flex items-center p-2 hover:bg-gray-100 hover:rounded-lg dark:hover:bg-gray-600"
                   >
+                    <!-- Customize Model Toggle -->
                     <i class="mr-3 fa-solid fa-calendar"></i> Customize Model
                   </a>
                   <a
@@ -223,9 +259,60 @@
                 </button>
               </div>
 
-              <!-- Logo -->
-              <div class="text-2xl font-bold text-gray-800 dark:text-white">
-                <a href="#">ChatBot</a>
+              <!-- Logo dropdwown -->
+              <div
+                @click="LogoOpen = !LogoOpen"
+                class="flex items-center p-2 hover:bg-gray-100 hover:rounded-lg dark:hover:bg-gray-600 font-bold text-gray-600 dark:text-white"
+              >
+                <span class="text-lg">ChatBot</span>
+                <i
+                  class="ml-3 text-gray-400 text-md fa-solid fa-chevron-down"
+                ></i>
+              </div>
+
+              <!-- Logo Dropdown Card -->
+              <div
+                x-show="LogoOpen"
+                x-transition
+                class="absolute left-0 mt-2 w-46 bg-white dark:bg-gray-700 text-gray-800 dark:text-white rounded-lg shadow-lg p-4 z-10 max-h-96 overflow-auto transition-all duration-300 ease-in-out"
+                style="top: 50px; left: 0; right: 0"
+              >
+                <div class="space-y-4">
+                  <!-- Upgrade to Plus Section -->
+                  <a
+                    href="#"
+                    class="flex items-center justify-between p-2 hover:bg-gray-100 hover:rounded-lg dark:hover:bg-gray-600"
+                  >
+                    <span class="font-semibold">Upgrade to Plus</span>
+                    <i class="ml-auto fa-solid fa-arrow-right"></i>
+                    <!-- Example icon for action -->
+                  </a>
+
+                  <!-- General Model Section -->
+                  <a
+                    href="#"
+                    class="flex items-center justify-between p-2 text-md text-gray-600 dark:text-gray-400 hover:bg-gray-100 hover:rounded-lg dark:hover:bg-gray-600"
+                  >
+                    <i class="mr-3 fa-solid fa-atom"></i>
+                    <span>General Model</span>
+                    <i class="ml-auto fa-solid fa-arrow-right"></i>
+                    <!-- Example icon for model selection -->
+                  </a>
+
+                  <!-- Divider -->
+                  <hr class="my-2 border-gray-200 dark:border-gray-600" />
+
+                  <!-- Temporary Chat Section -->
+                  <a
+                    href="#"
+                    class="flex items-center justify-between p-2 text-md text-gray-600 dark:text-gray-400 hover:bg-gray-100 hover:rounded-lg dark:hover:bg-gray-600"
+                  >
+                    <i class="mr-3 fa-regular fa-comment"></i>
+                    <span>Temporary Chat</span>
+                    <i class="ml-auto fa-solid fa-clock"></i>
+                    <!-- Clock icon for temporary chat -->
+                  </a>
+                </div>
               </div>
 
               <!-- Hamburger Menu for Small Screen -->
@@ -289,14 +376,60 @@
             <div class="relative flex items-center">
               <!-- File Upload Button -->
               <label
+                @click="FileUploadOpen = !FileUploadOpen"
                 for="file-upload"
                 class="absolute left-4 bottom-3 px-1.5 cursor-pointer border rounded-full"
               >
                 <i
-                  class="fas fa-paperclip text-gray-600 dark:text-white text-xl"
+                  class="fas fa-plus text-gray-600 dark:text-white text-xl"
                 ></i>
-                <input type="file" id="file-upload" class="hidden" />
               </label>
+
+              <!-- File Upload Dropdown -->
+              <div
+                x-show="FileUploadOpen"
+                x-transition
+                class="absolute left-0 mt-2 w-46 bg-white dark:bg-gray-700 text-gray-800 dark:text-white rounded-lg shadow-lg p-4 z-10 max-h-96 overflow-auto transition-all duration-300 ease-in-out"
+                style="top: -210px; left: 0; right: 0"
+              >
+                <h2
+                  class="text-xl sm:text-2xl lg:text-3xl text-gray-800 dark:text-white font-semibold"
+                >
+                  File Upload
+                </h2>
+
+                <hr class="my-2 border-gray-200 dark:border-gray-600" />
+
+                <div class="mt-auto space-y-4">
+                  <!-- Connect to Google Drive -->
+                  <a
+                    href="#"
+                    class="flex items-center p-2 hover:bg-gray-100 hover:rounded-lg dark:hover:bg-gray-600"
+                  >
+                    <i class="mr-3 fa-brands fa-google-drive"></i> Connect to
+                    Google Drive
+                  </a>
+
+                  <!-- Connect to Microsoft OneDrive (personal)  -->
+                  <a
+                    href="#"
+                    class="flex items-center p-2 hover:bg-gray-100 hover:rounded-lg dark:hover:bg-gray-600"
+                  >
+                    <i class="mr-3 fa-solid fa-cloud"></i> Connect to Microsoft
+                    OneDrive
+                  </a>
+
+                  <hr class="my-2 border-gray-200 dark:border-gray-600" />
+
+                  <!-- Upload File-->
+                  <a
+                    href="#"
+                    class="flex items-center p-2 hover:bg-gray-100 hover:rounded-lg dark:hover:bg-gray-600"
+                  >
+                    <i class="mr-3 fa-solid fa-file"></i> Upload File
+                  </a>
+                </div>
+              </div>
 
               <!-- Search Button -->
               <button
@@ -308,7 +441,7 @@
               <!-- Chat Input Field -->
               <textarea
                 placeholder="Type your message..."
-                class="flex-1 border rounded-xl p-3 h-28 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:focus:ring-indigo-600"
+                class="flex-1 border rounded-xl p-3 h-28 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-400 dark:focus:ring-gray-600"
               ></textarea>
 
               <!-- Send Button -->
@@ -496,6 +629,162 @@
               >
                 Delete
               </button>
+            </div>
+          </div>
+
+          <!-- Modal Customize Model Card -->
+          <div
+            x-show="CustomizeModelOpen"
+            x-transition
+            @click.outside="CustomizeModelOpen = false"
+            class="fixed top-0 left-0 w-full h-full flex items-center justify-center z-50 bg-black bg-opacity-50"
+          >
+            <div
+              class="bg-white dark:bg-gray-800 p-6 sm:p-8 rounded-lg shadow-lg overflow-auto w-11/12 sm:w-1/3 md:w-1/4 lg:w-1/5 relative"
+            >
+              <!-- Close Button (Icon in Top Right) -->
+              <button
+                @click="CustomizeModelOpen = false"
+                class="absolute top-2 right-2 text-gray-800 dark:text-white p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600"
+              >
+                <i class="fas fa-times"></i>
+              </button>
+
+              <!-- Title with Responsive Font Size -->
+              <h2
+                class="text-xl sm:text-2xl lg:text-3xl text-gray-800 dark:text-white font-semibold"
+              >
+                Customize Model
+              </h2>
+
+              <hr class="my-2 border-gray-200 dark:border-gray-600" />
+
+              <!-- API Key Input -->
+              <div
+                class="mt-4 text-sm sm:text-base text-gray-700 dark:text-gray-300"
+              >
+                <label
+                  for="api-key"
+                  class="block mb-2 text-gray-800 dark:text-white"
+                  >API Key</label
+                >
+                <input
+                  id="api-key"
+                  type="text"
+                  x-model="apiKey"
+                  class="w-full p-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-800 dark:text-white"
+                  placeholder="Enter your API Key"
+                />
+              </div>
+
+              <!-- Base URL Input -->
+              <div
+                class="mt-4 text-sm sm:text-base text-gray-700 dark:text-gray-300"
+              >
+                <label
+                  for="base-url"
+                  class="block mb-2 text-gray-800 dark:text-white"
+                  >Base URL</label
+                >
+                <input
+                  id="base-url"
+                  type="text"
+                  x-model="baseURL"
+                  class="w-full p-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-800 dark:text-white"
+                  placeholder="Enter Base URL"
+                />
+              </div>
+
+              <!-- Model Selection -->
+              <div
+                class="mt-4 text-sm sm:text-base text-gray-700 dark:text-gray-300"
+              >
+                <label
+                  for="model"
+                  class="block mb-2 text-gray-800 dark:text-white"
+                  >Select Model</label
+                >
+                <select
+                  id="model"
+                  x-model="selectedModel"
+                  class="w-full p-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-800 dark:text-white"
+                >
+                  <option value="gpt-3.5-turbo">GPT-3.5 Turbo</option>
+                  <option value="gpt-4">GPT-4</option>
+                  <option value="anthropic">Anthropic</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+
+              <!-- Max Tokens Input -->
+              <div
+                class="mt-4 text-sm sm:text-base text-gray-700 dark:text-gray-300"
+              >
+                <label
+                  for="max-tokens"
+                  class="block mb-2 text-gray-800 dark:text-white"
+                  >Max Tokens</label
+                >
+                <input
+                  id="max-tokens"
+                  type="number"
+                  x-model="maxTokens"
+                  class="w-full p-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-800 dark:text-white"
+                  placeholder="Enter Max Tokens"
+                />
+              </div>
+
+              <!-- Temperature Input -->
+              <div
+                class="mt-4 text-sm sm:text-base text-gray-700 dark:text-gray-300"
+              >
+                <label
+                  for="temperature"
+                  class="block mb-2 text-gray-800 dark:text-white"
+                  >Temperature</label
+                >
+                <input
+                  id="temperature"
+                  type="number"
+                  x-model="temperature"
+                  step="0.01"
+                  min="0"
+                  max="1"
+                  class="w-full p-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-800 dark:text-white"
+                  placeholder="Enter Temperature (0-1)"
+                />
+              </div>
+
+              <!-- Top P Input -->
+              <div
+                class="mt-4 text-sm sm:text-base text-gray-700 dark:text-gray-300"
+              >
+                <label
+                  for="top-p"
+                  class="block mb-2 text-gray-800 dark:text-white"
+                  >Top P</label
+                >
+                <input
+                  id="top-p"
+                  type="number"
+                  x-model="topP"
+                  step="0.01"
+                  min="0"
+                  max="1"
+                  class="w-full p-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-800 dark:text-white"
+                  placeholder="Enter Top P (0-1)"
+                />
+              </div>
+
+              <!-- Save Button -->
+              <div class="mt-4 text-right">
+                <button
+                  @click="saveChanges"
+                  class="px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-700"
+                >
+                  Save changes
+                </button>
+              </div>
             </div>
           </div>
 

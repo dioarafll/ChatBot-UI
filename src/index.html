@@ -1,0 +1,542 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="index, follow" />
+    <meta
+      name="description"
+      content="ChatBot is an AI-powered chatbot for seamless customer support and engagement. Start chatting with FluxBot now!"
+    />
+    <meta
+      name="keywords"
+      content="AI chatbot, customer support, chatbot AI, conversational AI, help desk, chatbot integration"
+    />
+    <meta name="author" content="dioarafi" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="ChatBot | AI-Powered Chatbot" />
+    <meta
+      property="og:description"
+      content="ChatBot is an AI-powered chatbot designed for customer support and engagement. Start a conversation with FluxBot today."
+    />
+    <meta
+      property="og:image"
+      content="https://yourdomain.com/assets/fluxbot-image.jpg"
+    />
+    <meta property="og:url" content="https://yourdomain.com" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="ChatBot | AI-Powered Chatbot" />
+    <meta
+      name="twitter:description"
+      content="Start a conversation with ChatBot, the AI chatbot designed for seamless customer support."
+    />
+    <meta
+      name="twitter:image"
+      content="https://yourdomain.com/assets/chatbot-image.jpg"
+    />
+
+    <link
+      rel="icon"
+      href="https://yourdomain.com/favicon.ico"
+      type="image/x-icon"
+    />
+
+    <title>FluxBot | AI-Powered Chatbot</title>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "ChatBot",
+        "url": "https://yourdomain.com",
+        "description": "ChatBot is an AI-powered chatbot designed to help businesses and individuals with seamless customer support and interaction.",
+        "mainEntityOfPage": "https://yourdomain.com"
+      }
+    </script>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+  </head>
+  <body class="bg-white dark:bg-gray-900">
+    <!-- Parent Container with Flexbox -->
+    <section class="flex flex-col h-screen">
+      <div
+        x-data="{ sidebarOpen: false, profileAccountOpen: false, generalOpen: false, profileOpen: true, modalOpen: false, chatOpen: false, deleteOpen: false, deleteChatOpen: false }"
+        class="flex h-screen"
+      >
+        <!-- Overlay (closes sidebar when clicked outside) -->
+        <div
+          x-show="sidebarOpen"
+          @click="sidebarOpen = false"
+          class="fixed inset-0 bg-black bg-opacity-50 z-20 md:hidden"
+        ></div>
+
+        <!-- Sidebar Container -->
+        <div
+          :class="{'block': sidebarOpen, 'hidden': !sidebarOpen}"
+          class="md:block md:w-64 w-64 overflow-y-auto border-r px-4 py-8 bg-white dark:bg-gray-800 transition-all duration-300 ease-in-out fixed top-0 left-0 h-full shadow-md z-30"
+        >
+          <div class="flex flex-col justify-between h-full">
+            <!-- Logo -->
+            <div class="flex items-center justify-normal">
+              <img
+                src="https://placehold.co/100x100?text=Logo"
+                alt="Logo"
+                class="mr-3 h-10 rounded-full"
+              />
+              <h1
+                class="text-xl font-semibold text-gray-800 capitalize sm:text-3xl dark:text-white"
+              >
+                ChatBot
+              </h1>
+            </div>
+
+            <!-- Sidebar Menu -->
+            <ul class="space-y-4 flex pt-4 flex-col flex-grow mt-4">
+              <!-- Chat 1 Item -->
+              <li
+                class="relative flex justify-between block text-gray-800 dark:text-white p-2 hover:bg-gray-100 hover:rounded-lg dark:hover:text-indigo-400 transition-colors duration-300"
+              >
+                <span>Chat 1</span>
+                <i
+                  @click="chatOpen = !chatOpen"
+                  class="mt-1 fa-solid fa-ellipsis-vertical cursor-pointer"
+                ></i>
+
+                <!-- Chat Dropdown -->
+                <div
+                  x-show="chatOpen"
+                  x-transition
+                  class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-700 text-gray-800 dark:text-white rounded-lg shadow-lg p-4 z-10 max-h-96 overflow-auto transition-all duration-300 ease-in-out"
+                  style="top: 100%; right: 0"
+                >
+                  <a
+                    href="#"
+                    class="flex items-center p-2 hover:bg-gray-100 hover:rounded-lg dark:hover:bg-gray-600"
+                  >
+                    <i class="mr-3 fa-solid fa-share-alt"></i> Share
+                  </a>
+                  <a
+                    href="#"
+                    class="flex items-center p-2 hover:bg-gray-100 hover:rounded-lg dark:hover:bg-gray-600"
+                  >
+                    <i class="mr-3 fa-solid fa-edit"></i> Change Name
+                  </a>
+                  <a
+                    href="#"
+                    class="flex items-center p-2 hover:bg-gray-100 hover:rounded-lg dark:hover:bg-gray-600"
+                  >
+                    <i class="mr-3 fa-solid fa-archive"></i> Archive
+                  </a>
+                  <a
+                    @click="deleteChatOpen = true"
+                    href="#"
+                    class="flex items-center p-2 hover:bg-gray-100 hover:rounded-lg dark:hover:bg-gray-600"
+                  >
+                    <i class="mr-3 fa-solid fa-trash"></i> Delete
+                  </a>
+                </div>
+              </li>
+            </ul>
+
+            <hr class="my-6 border-gray-200 dark:border-gray-600" />
+
+            <!-- Bottom Section (Profile) -->
+            <div class="mt-auto space-y-4">
+              <!-- Profile Account Dropdown Card -->
+              <div class="relative">
+                <button
+                  @click="profileAccountOpen = !profileAccountOpen"
+                  class="flex items-center text-gray-800 dark:text-white w-full text-left hover:text-indigo-500 dark:hover:text-indigo-400"
+                >
+                  <img
+                    src="https://placehold.co/100x100?text=Profile"
+                    alt="Profile"
+                    class="h-8 rounded-full"
+                  />
+                  <span class="ml-3">Profile</span>
+                </button>
+
+                <!-- Profile Account Dropdown -->
+                <div
+                  x-show="profileAccountOpen"
+                  x-transition
+                  class="absolute left-0 mt-2 w-46 bg-white dark:bg-gray-700 text-gray-800 dark:text-white rounded-lg shadow-lg p-4 z-10 max-h-96 overflow-auto transition-all duration-300 ease-in-out"
+                  style="top: -280px; left: 0; right: 0"
+                >
+                  <a
+                    href="#"
+                    class="flex items-center p-2 hover:bg-gray-100 hover:rounded-lg dark:hover:bg-gray-600"
+                  >
+                    dioarafi00@gmail.com
+                  </a>
+                  <hr class="my-2 border-gray-200 dark:border-gray-600" />
+                  <a
+                    href="#"
+                    class="flex items-center p-2 hover:bg-gray-100 hover:rounded-lg dark:hover:bg-gray-600"
+                  >
+                    <i class="mr-3 fa-solid fa-calendar"></i> Customize Model
+                  </a>
+                  <a
+                    href="#"
+                    class="flex items-center p-2 hover:bg-gray-100 hover:rounded-lg dark:hover:bg-gray-600"
+                  >
+                    <i class="mr-3 fa-solid fa-question-circle"></i> Help
+                  </a>
+                  <a
+                    @click="modalOpen = true"
+                    href="#"
+                    class="flex items-center p-2 hover:bg-gray-100 hover:rounded-lg dark:hover:bg-gray-600"
+                  >
+                    <i class="mr-3 fa-solid fa-cogs"></i> Arrangement
+                  </a>
+                  <hr class="my-2 border-gray-200 dark:border-gray-600" />
+                  <a
+                    href="#"
+                    class="flex items-center p-2 hover:bg-gray-100 hover:rounded-lg dark:hover:bg-gray-600"
+                  >
+                    <i class="mr-3 fa-solid fa-sign-out-alt"></i> Exit
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 p-8 md:ml-64 overvlaw-auto">
+          <!-- Navbar Component -->
+          <nav
+            class="fixed w-full top-0 left-0 md:hidden bg-white dark:bg-gray-800 p-1.5 shadow-sm"
+          >
+            <div class="flex justify-between items-center">
+              <!-- Chat Icon -->
+              <div class="relative">
+                <button
+                  class="text-gray-800 hover:border rounded-xl p-2 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400"
+                >
+                  <i class="fas fa-plus text-xl"></i>
+                </button>
+              </div>
+
+              <!-- Logo -->
+              <div class="text-2xl font-bold text-gray-800 dark:text-white">
+                <a href="#">ChatBot</a>
+              </div>
+
+              <!-- Hamburger Menu for Small Screen -->
+              <button
+                @click="sidebarOpen = !sidebarOpen"
+                class="md:hidden text-gray-800 dark:text-white hover:border rounded-xl p-2"
+              >
+                <i :class="sidebarOpen ? 'fas fa-times' : 'fas fa-bars'"></i>
+              </button>
+            </div>
+          </nav>
+
+          <!-- Main Content Goes Here -->
+
+          <div
+            class="flex flex-col w-full overvlaw-auto sm:w-[80%] md:w-[100%] lg:w-[77%] xl:w-[70%] space-y-4 mt-14 h-[calc(100vh-200px)]"
+          >
+            <!-- User Message -->
+            <div class="flex justify-end">
+              <!-- User Icon and Message -->
+              <div class="flex items-center space-x-3">
+                <!-- User Message Bubble -->
+                <div class="bg-gray-100 text-gra-800 p-3 rounded-lg w-full">
+                  <p>Hey, how's it going?</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Chatbot Message 
+            <div class="flex justify-normal">
+              <div class="flex items-center space-x-3">
+                <div class="bg-white text-gray-800 py-3 rounded-lg w-full">
+                  <p>I'm doing great! How can I help you today?</p>
+                </div>
+              </div>
+            </div>
+            -->
+
+            <!-- Chatbot Message -->
+            <div class="flex justify-normal">
+              <!-- Chatbot Icon and Message -->
+              <div class="flex items-center space-x-3">
+                <!-- Chatbot Message Bubble -->
+                <div class="bg-white text-gray-800 py-3 rounded-lg w-full">
+                  <p>I'm doing great! How can I help you today?</p>
+                  <!-- Gambar Responsif -->
+                  <img
+                    src="https://placehold.co/200x150?text=Image"
+                    alt="Image"
+                    class="mt-2 w-full rounded-md"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chatbot Input Component -->
+          <div
+            class="fixed bottom-4 left-0 right-0 mx-auto w-full sm:w-[67%] lg:w-[60%] p-3 dark:bg-gray-800 bg-white md:ml-64"
+          >
+            <div class="relative flex items-center">
+              <!-- File Upload Button -->
+              <label
+                for="file-upload"
+                class="absolute left-4 bottom-3 px-1.5 cursor-pointer border rounded-full"
+              >
+                <i
+                  class="fas fa-paperclip text-gray-600 dark:text-white text-xl"
+                ></i>
+                <input type="file" id="file-upload" class="hidden" />
+              </label>
+
+              <!-- Search Button -->
+              <button
+                class="absolute left-16 bottom-3 px-1.5 text-gray-600 dark:text-white border rounded-xl hover:bg-gray-200 dark:hover:bg-gray-600"
+              >
+                <i class="fas fa-globe text-xl"></i> <span>Search</span>
+              </button>
+
+              <!-- Chat Input Field -->
+              <textarea
+                placeholder="Type your message..."
+                class="flex-1 border rounded-xl p-3 h-28 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:focus:ring-indigo-600"
+              ></textarea>
+
+              <!-- Send Button -->
+              <button
+                class="absolute p-2 right-3 text-gray-600 hover:text-gray-600 dark:text-white dark:hover:text-gray-400 border rounded-xl"
+              >
+                <i class="fas fa-paper-plane text-xl"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Modal Overlay -->
+          <div
+            x-show="modalOpen"
+            class="fixed inset-0 bg-black bg-opacity-50 z-40"
+          ></div>
+
+          <!-- Modal Card -->
+          <div
+            x-show="modalOpen"
+            x-transition
+            class="fixed top-0 left-0 w-full h-full flex items-center justify-center z-50"
+          >
+            <div
+              class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg w-11/12 sm:w-1/3 relative"
+            >
+              <!-- Close Button -->
+              <button
+                @click="modalOpen = false"
+                class="absolute top-2 right-2 text-gray-800 dark:text-white p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600"
+              >
+                <i class="fas fa-times"></i>
+              </button>
+
+              <h2 class="text-2xl text-gray-800 dark:text-white">Settings</h2>
+              <hr class="my-2 border-gray-200 dark:border-gray-600" />
+
+              <!-- Toggle Buttons -->
+              <div class="flex space-x-4 mt-4">
+                <button
+                  @click="generalOpen = false; profileOpen = true"
+                  class="w-full text-center text-gray-800 dark:text-white py-2 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg"
+                >
+                  Profile
+                </button>
+                <button
+                  @click="generalOpen = true; profileOpen = false"
+                  class="w-full text-center text-gray-800 dark:text-white py-2 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg"
+                >
+                  General
+                </button>
+              </div>
+
+              <!-- General Section -->
+              <div x-show="generalOpen" class="mt-4">
+                <div class="space-y-2 mt-2">
+                  <!-- Language Selection -->
+                  <div class="flex justify-between">
+                    <span
+                      class="text-gray-700 dark:text-gray-300 hover:bg-gray-100 hover:rounded-lg p-2"
+                      >Language</span
+                    >
+                    <select
+                      class="w-24 p-2 rounded-lg bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600"
+                    >
+                      <option>English</option>
+                      <option>Spanish</option>
+                      <option>French</option>
+                    </select>
+                  </div>
+                  <hr class="my-2 border-gray-200 dark:border-gray-600" />
+
+                  <!-- Theme Selection -->
+                  <div class="flex justify-between">
+                    <span
+                      class="text-gray-700 dark:text-gray-300 hover:bg-gray-100 hover:rounded-lg p-2"
+                      >Theme</span
+                    >
+                    <select
+                      class="w-24 p-2 rounded-lg bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600"
+                    >
+                      <option>Light</option>
+                      <option>Dark</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Profile Section -->
+              <div x-show="profileOpen" class="mt-4">
+                <div class="space-y-2 mt-2">
+                  <!-- Name Display -->
+                  <div
+                    class="flex justify-between hover:bg-gray-100 hover:rounded-lg p-2"
+                  >
+                    <span class="text-gray-700 dark:text-gray-300">Name</span>
+                    <span>Dio Arafi</span>
+                  </div>
+                  <hr class="my-2 border-gray-200 dark:border-gray-600" />
+
+                  <!-- Email Display -->
+                  <div
+                    class="flex justify-between hover:bg-gray-100 hover:rounded-lg p-2"
+                  >
+                    <span class="text-gray-700 dark:text-gray-300">Email</span>
+                    <span>dioarafi00@gmail.com</span>
+                  </div>
+                  <hr class="my-2 border-gray-200 dark:border-gray-600" />
+
+                  <!-- Phone Number Display -->
+                  <div
+                    class="flex justify-between hover:bg-gray-100 hover:rounded-lg p-2"
+                  >
+                    <span class="text-gray-700 dark:text-gray-300"
+                      >Phone Number</span
+                    >
+                    <span>-</span>
+                  </div>
+                  <hr class="my-2 border-gray-200 dark:border-gray-600" />
+
+                  <!-- Terms of Use and Privacy Policy -->
+                  <div
+                    class="flex justify-between hover:bg-gray-100 hover:rounded-lg p-2"
+                  >
+                    <span class="text-gray-700 dark:text-gray-300"
+                      >Terms of Use</span
+                    >
+                    <span>View</span>
+                  </div>
+                  <hr class="my-2 border-gray-200 dark:border-gray-600" />
+
+                  <div
+                    class="flex justify-between hover:bg-gray-100 hover:rounded-lg p-2"
+                  >
+                    <span class="text-gray-700 dark:text-gray-300"
+                      >Privacy Policy</span
+                    >
+                    <span>View</span>
+                  </div>
+                  <hr class="my-2 border-gray-200 dark:border-gray-600" />
+
+                  <!-- Delete Account -->
+                  <div class="flex justify-between">
+                    <span
+                      class="text-gray-700 dark:text-gray-300 hover:bg-gray-100 hover:rounded-lg p-2"
+                      >Delete account</span
+                    >
+                    <button
+                      @click="deleteOpen = true"
+                      class="w-24 text-center bg-red-800 text-white dark:text-white py-2 hover:bg-red-600 dark:hover:bg-red-600 rounded-lg"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Modal Delete Account Card -->
+          <div
+            x-show="deleteOpen"
+            x-transition
+            @click.outside="deleteOpen = false"
+            class="fixed top-0 left-0 w-full h-full flex items-center justify-center z-50 bg-black bg-opacity-50"
+          >
+            <div
+              class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg w-11/12 sm:w-1/3 relative"
+            >
+              <!-- Close Button (Icon in Top Right) -->
+              <button
+                @click="deleteOpen = false"
+                class="absolute top-2 right-2 text-gray-800 dark:text-white p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600"
+              >
+                <i class="fas fa-times"></i>
+              </button>
+
+              <h2 class="text-2xl text-gray-800 dark:text-white">
+                Delete Account
+              </h2>
+              <hr class="my-2 border-gray-200 dark:border-gray-600" />
+
+              <button
+                class="w-24 text-center bg-red-800 text-white dark:text-white py-2 hover:bg-red-600 dark:hover:bg-red-600 rounded-lg"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+
+          <!-- Modal Delete Chat Card -->
+          <div
+            x-show="deleteChatOpen"
+            x-transition
+            @click.outside="deleteChatOpen = false"
+            class="fixed top-0 left-0 w-full h-full flex items-center justify-center z-50 bg-black bg-opacity-50"
+          >
+            <div
+              class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg w-11/12 sm:w-1/3 relative"
+            >
+              <!-- Close Button (Icon in Top Right) -->
+              <button
+                @click="deleteChatOpen = false"
+                class="absolute top-2 right-2 text-gray-800 dark:text-white p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600"
+              >
+                <i class="fas fa-times"></i>
+              </button>
+
+              <h2 class="text-2xl text-gray-800 dark:text-white">
+                Delete Chat
+              </h2>
+              <hr class="my-2 border-gray-200 dark:border-gray-600" />
+
+              <button
+                class="w-24 text-center bg-red-800 text-white dark:text-white py-2 hover:bg-red-600 dark:hover:bg-red-600 rounded-lg"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Include Alpine.js for Interactivity -->
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+  </body>
+</html>

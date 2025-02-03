@@ -1,0 +1,33 @@
+{
+  "name": "chatbot",
+  "version": "1.0.0",
+  "description": "A responsive Chatbot template built with Tailwind CSS",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tailwindcss build public/styles/tailwind.css -o dist/styles.css",
+    "watch": "tailwindcss -i ./public/styles/tailwind.css -o ./dist/styles.css --watch",
+    "serve": "live-server ./src",
+    "dev": "npm run watch & npm run serve"
+  },
+  "author": "dioarafi",
+  "license": "MIT",
+  "dependencies": {
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.15"
+  },
+  "devDependencies": {
+    "live-server": "^1.2.1"
+  },
+  "keywords": [
+    "tailwindcss",
+    "fluxbot",
+    "chatbot",
+    "chatflow",
+    "html",
+    "css",
+    "responsive"
+  ],
+  "browserslist": "> 0.25%, not dead"
+}

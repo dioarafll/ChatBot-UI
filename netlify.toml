@@ -1,0 +1,9 @@
+[build]
+  command = "npm run build"  # Run npm build script
+  publish = "src"           # Publish the contents of the dist folder
+  environment = { NODE_VERSION = "18" }
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

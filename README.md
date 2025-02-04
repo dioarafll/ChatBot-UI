@@ -1,10 +1,41 @@
 # AI Chatbot for Modern Web Applications  
 
-[Live Demo](https://chatbot-flow-ui.netlify.app/) – Experience the chatbot in action.  
 
 This AI chatbot is a powerful and highly customizable solution designed to enhance user interaction on your website. Built with modern technologies like Tailwind CSS, Alpine.js, and Node.js, it provides a seamless chat experience that helps businesses, developers, and users engage in meaningful conversations.  
 
 ---  
+
+# Live Demo - Chatbot Flow UI
+
+**Demo URL:**  
+[Chatbot Flow UI](https://chatbot-flow-ui.netlify.app/)
+
+## Available Pages
+
+- **[Signup Page](https://chatbot-flow-ui.netlify.app/signup.html)**  
+  A registration page for new users to create an account on the platform.
+
+- **[Signin Page](https://chatbot-flow-ui.netlify.app/signin.html)**  
+  A login page for existing users to access the application.
+  
+- **[Verify M2FA](https://chatbot-flow-ui.netlify.app/verify-m2fa.html)**  
+  A page to verify Multi-Factor Authentication (M2FA), ensuring enhanced security for user logins.
+
+- **[Verify Phone](https://chatbot-flow-ui.netlify.app/verify-phone.html)**  
+  A dedicated page for verifying a user's phone number as part of the Two-Factor Authentication (2FA) setup.
+  
+- **[Verify Page](https://chatbot-flow-ui.netlify.app/verify.html)**  
+  A verification page to confirm user identity through methods such as email or phone verification.
+
+- **[Enable MFA](https://chatbot-flow-ui.netlify.app/enable-mfa.html)**  
+  A page to enable Multi-Factor Authentication (MFA) as an additional security layer for user accounts.
+  
+
+## Demo Notes
+
+This demo provides an overview of the chatbot flow and user authentication process within the chatbot platform, including chat interactions, user registration, login, and two-factor authentication (MFA/2FA) setup and verification to ensure account security. You can explore each page directly through the links above and see how the chatbot and security authentication system are implemented.
+
+---
 
 ## Features  
 

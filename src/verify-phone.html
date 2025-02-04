@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Verify Phone Page</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body class="bg-white dark:bg-gray-900">
+    <div>
+      <div
+        x-data="{ open: false, selectedCountry: '+1', flag: '🇺🇲', phoneNumber: '' }"
+        class="flex justify-center items-center mt-14 md:mt-0 md:h-screen bg-gray-100 dark:bg-gray-900"
+      >
+        <!-- Card Container -->
+        <div
+          class="max-w-sm w-full bg-white dark:bg-gray-800 p-8 rounded-lg md:shadow-lg"
+        >
+          <!-- Logo and Heading -->
+          <div class="text-center mb-6">
+            <div class="flex justify-center mx-auto">
+              <img
+                class="w-auto h-14 rounded-full"
+                src="https://placehold.co/100?text=FluxUI&font=roboto"
+                alt="Logo"
+              />
+            </div>
+            <h3
+              class="mt-3 text-xl font-medium text-center text-gray-600 dark:text-gray-200"
+            >
+              Verify Your Phone Number
+            </h3>
+            <p class="mt-1 text-center text-gray-500 dark:text-gray-400">
+              Enter your phone number to receive a verification code.
+            </p>
+          </div>
+
+          <!-- Phone Number Input Form -->
+          <form>
+            <div class="mb-4">
+              <label
+                for="phone"
+                class="block text-sm font-medium text-gray-700 dark:text-gray-200"
+                >Phone Number</label
+              >
+              <div
+                class="flex items-center border-b border-gray-300 dark:border-gray-600"
+              >
+                <!-- Dropdown Country Code -->
+                <div class="relative">
+                  <button
+                    type="button"
+                    @click="open = !open"
+                    class="flex items-center justify-between w-20 px-2 py-2 text-gray-900 dark:text-gray-200 bg-transparent border-r border-gray-300 dark:border-gray-600 rounded-l-md focus:outline-none"
+                  >
+                    <span x-text="flag" class="text-lg"></span>
+                    <span class="ml-2" x-text="selectedCountry"></span>
+                    <i class="fas fa-chevron-down ml-2"></i>
+                  </button>
+                  <!-- Dropdown Menu -->
+                  <div
+                    x-show="open"
+                    x-transition
+                    class="absolute z-10 w-24 mt-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-lg"
+                  >
+                    <ul class="text-sm">
+                      <li
+                        @click="selectedCountry = '+62'; flag = '🇮🇩'; open = false"
+                        class="cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700"
+                      >
+                        🇮🇩 +62
+                      </li>
+                      <li
+                        @click="selectedCountry = '+1'; flag = '🇺🇸'; open = false"
+                        class="cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700"
+                      >
+                        🇺🇸 +1
+                      </li>
+                      <li
+                        @click="selectedCountry = '+44'; flag = '🇬🇧'; open = false"
+                        class="cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700"
+                      >
+                        🇬🇧 +44
+                      </li>
+                      <!-- Add more countries as needed -->
+                    </ul>
+                  </div>
+                </div>
+                <!-- Input Field for Phone Number -->
+                <input
+                  type="tel"
+                  id="phone"
+                  x-model="phoneNumber"
+                  class="w-full py-2 px-3 text-gray-900 dark:text-gray-200 bg-transparent focus:outline-none focus:ring-2 focus:ring-gray-500"
+                  placeholder="Enter your phone number"
+                  required
+                />
+              </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="mt-6">
+              <button
+                type="submit"
+                class="w-full py-2 px-4 bg-gray-800 text-white font-semibold rounded-lg hover:bg-gray-700 focus:outline-none"
+              >
+                Send Verification Code
+              </button>
+            </div>
+          </form>
+
+          <!-- Sign In Link -->
+          <div class="mt-4 text-center">
+            <p class="text-sm text-gray-600 dark:text-gray-300">
+              Already verified?
+              <a
+                href="signin.html"
+                class="text-blue-500 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
+                >Sign In</a
+              >
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Include Alpine.js -->
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+  </body>
+</html>
